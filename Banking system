@@ -1,0 +1,187 @@
+#include <iostream>
+
+using namespace std;
+
+class BankAccount{
+private:
+int account_number;
+string account_holder;
+double account_balance;
+
+public:
+    BankAccount();
+    void setaccount_number(int a);
+    void setaccount_holder(string b);
+    void setaccount_balance(double c);
+    int getaccount_number();
+    string getaccount_holder();
+    double getaccount_balance();
+    void deposite_amount(double amount);
+    void withdrawal_amount(double amount);
+    double balance_inquiry();
+
+
+};
+BankAccount::BankAccount(){}
+void BankAccount::setaccount_number(int a)
+{
+    account_number=a;
+}
+void BankAccount::setaccount_holder(string b)
+{
+    account_holder=b;
+}
+void BankAccount::setaccount_balance(double c)
+{
+    account_balance=c;
+}
+int BankAccount::getaccount_number()
+{
+    return account_number;
+}
+string BankAccount::getaccount_holder()
+{
+    return account_holder;
+}
+double BankAccount::getaccount_balance()
+{
+    return account_balance;
+}
+void deposite_amount(BankAccount& obj,double amount)
+{
+    obj.setaccount_balance(obj.getaccount_balance()+amount);
+}
+void withdrawal_amount(BankAccount& obj,double amount)
+{
+   obj.setaccount_balance(obj.getaccount_balance()-amount);
+}
+double balance_inquiry(BankAccount& obj)
+{
+    return obj.getaccount_balance();
+}
+void transfer_funds(BankAccount& source, BankAccount& dest)
+{
+      double funds=0;
+      cout<<"enter the value of transfer = ";
+      cin>>funds;
+      if(funds>0 && funds<source.getaccount_balance())
+      {
+          source.setaccount_balance(source.getaccount_balance()-funds);
+          dest.setaccount_balance(dest.getaccount_balance()+funds);
+      }
+}
+
+
+int main()
+{
+     cout<<"Welcome to the banking system"<<endl;
+    int f;
+    double new_amount;
+    cout<<"Number of bank accounts details  = ";
+    cin>>f;
+    BankAccount obj[f];
+    int x;
+    string y;
+    double z;
+
+    for(int i=0; i<f; i++)
+    {
+        cout<<"Bank account"<<" "<<i+1<<" "<<endl;
+        cout<<"Enter the account number = ";
+        cin>>x;
+        obj[i].setaccount_number(x);
+        cout<<"Enter the account holder  = ";
+        cin>>y;
+        obj[i].setaccount_holder(y);
+        cout<<"Enter the account balance = ";
+        cin>>z;
+        obj[i].setaccount_balance(z);
+        cout<<"Account number = "<<obj[i].getaccount_number()<<endl;
+        cout<<"Account holder = "<<obj[i].getaccount_holder()<<endl;
+        cout<<"Account balance = "<<obj[i].getaccount_balance()<<endl;
+    }
+    
+    bool found = false;
+    int index=0; 
+    
+    int t;
+    cout<<"Enter that account number which you want transactions = ";
+    cin>>t;
+    for(int i=0; i<f; i++)
+        {
+            if(obj[i].getaccount_number()==t)
+            {
+            	found = true;
+            	index=i;
+        	}
+    	}
+    
+	char choice = 'Y';
+		
+    if (found==true)
+	{	  
+    while (choice == 'Y')
+    {
+	            cout<<"Press 1 = deposit amount"<<endl;
+			    cout<<"Press 2 = withdrawal amount"<<endl;
+			    cout<<"Press 3 = balance inquiry"<<endl;
+			    cout<<"Press 4 = transfer amount"<<endl;
+			
+			    int option;
+			    cout<<"Enter the case you want = ";
+			    cin>>option;
+			
+			    double amount;
+			
+			    switch(option)
+			    {
+			        case 1:
+			            cout<<"Enter the value of deposit = ";
+			            cin>>amount;
+			            deposite_amount(obj[index],amount);
+			            new_amount = balance_inquiry(obj[index]);
+			            cout<<"Current balance = "<<new_amount<<endl;
+			            break;
+			        case 2:
+			            cout<<"Enter the value of withdrawal = ";
+			            cin>>amount;
+			            withdrawal_amount(obj[index],amount);
+			            new_amount = balance_inquiry(obj[index]);
+			            cout<<"Current balance = "<<new_amount<<endl;
+			            break;
+			        case 3:
+			            cout<<"Current balance = "<<balance_inquiry(obj[index])<<endl;
+			            break;
+			        case 4:
+			            int transfer_account;
+			            cout<<"Enter the account number in which you want to transfer money = ";
+			            cin>>transfer_account;
+			            
+			            double new_funds;
+			            for(int i=0; i<f; i++)
+			            {
+			                if(obj[i].getaccount_number()==transfer_account)
+			                {
+			                    transfer_funds(obj[index], obj[i]);
+			                    new_funds=balance_inquiry(obj[i]);
+			                    cout<<"Current balance on your account = "<<balance_inquiry(obj[index])<<endl;
+			                    break;
+            				}
+        				}		
+        				break; 
+    				default:
+        				cout << "Invalid number" << endl;
+        				break;
+				}
+			    
+			    cout<<"Do you want to continue (Y|N)?"<<endl;
+			    cin>>choice;
+		} 
+	} 
+	else
+	{
+		cout<<"Invalid account number"<<endl;
+	}  
+	
+	return 0;
+}
