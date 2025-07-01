@@ -1,0 +1,463 @@
+#include <iostream>
+#include <string>
+
+
+using namespace std;
+
+// Class to handle various services offered by the hotel
+class Services {
+public:
+    int serviceChoice;
+public:
+    Services()
+    {
+        //default constructor
+    }
+
+// Function to provide room services based on user input
+    void roomservice()
+        {
+            while(true){
+                    system ("color e" );
+        cout << "Press 1 to call breakfast" << endl;
+        cout << "Press 2 to call lunch" << endl;
+        cout << "Press 3 to call tea or coffee" << endl;
+        cout << "Press 4 to call dinner" << endl;
+        cout << "Press 5 to call sweeper" << endl;
+        cout << "Press 6 to call emergency" << endl;
+        cout << "Press 7 to call hospitality" << endl;
+        cout << "Press 8 to call plumber" << endl;
+        cout << "Press 9 to call electrician" << endl;
+        cout << "Press 10 to call laundry" << endl;
+        cout << "Enter the room services which you want to call: ";
+
+        cin >> serviceChoice;
+
+        switch (serviceChoice)
+        {
+        case 1:
+            cout<<" "<<endl;
+            cout << "You are calling breakfast service" << endl;
+            cout << "Please wait for a few minutes" << endl;
+            break;
+        case 2:
+            cout<<" "<<endl;
+            cout << "You are calling lunch service" << endl;
+            cout << "Please wait for a few minutes" << endl;
+            break;
+        case 3:
+            cout<<" "<<endl;
+            cout << "You are calling tea or coffee service" << endl;
+            cout << "Please wait for a few minutes" << endl;
+            break;
+        case 4:
+            cout<<" "<<endl;
+            cout << "You are calling dinner service" << endl;
+            cout << "Please wait for a few minutes" << endl;
+            break;
+        case 5:
+            cout<<" "<<endl;
+            cout << "You are calling sweeper service" << endl;
+            cout << "Please wait for a few minutes" << endl;
+            break;
+        case 6:
+            cout<<" "<<endl;
+            cout << "You are calling emergency service" << endl;
+            cout << "Please wait for a few minutes" << endl;
+            break;
+        case 7:
+            cout<<" "<<endl;
+            cout << "You are calling hospitality service" << endl;
+            cout << "Please wait for a few minutes" << endl;
+            break;
+        case 8:
+            cout<<" "<<endl;
+            cout << "You are calling plumber service" << endl;
+            cout << "Please wait for a few minutes" << endl;
+            break;
+        case 9:
+            cout<<" "<<endl;
+            cout << "You are calling electrician service" << endl;
+            cout << "Please wait for a few minutes" << endl;
+            break;
+        case 10:
+            cout<<" "<<endl;
+            cout << "You are calling laundry service" << endl;
+            cout << "Please wait for a few minutes" << endl;
+            break;
+        default:
+            cout<<" "<<endl;
+            cout << "Invalid service number you pressed" << endl;
+            cout<<" "<<endl;
+            continue;
+        }
+            break;
+        }
+        }
+};
+
+// Base class for a person with common attributes
+class Person {
+protected:
+    string firstname;
+    string lastname;
+    int id;
+    int age;
+    int contactnumber;
+public:
+    Person()
+    {
+       //default constructor
+    }
+// Function to get personal details from the user
+    void enterDetails() {
+        system ("color b");
+        cout << "Kindly enter your First name: " << endl;
+        cin >> firstname;
+        cout << "Kindly enter your Last name: " << endl;
+        cin >> lastname;
+        cout << "Kindly enter your CNIC: " << endl;
+        cin >> id;
+        cout << "Kindly enter your Age: " << endl;
+        cin >> age;
+        cout << "Kindly enter your Functional Contact No: " << endl;
+        cin >> contactnumber;
+    }
+
+// Getter functions for personal details
+    string getfirstname()const
+    {
+    return firstname;
+    }
+     string getlastname()const
+    {
+    return lastname;
+    }
+    int getid()const
+    {
+    return id;
+    }
+    int getage()const
+    {
+    return age;
+    }
+    int getcontactnumber()const
+    {
+    return contactnumber;
+    }
+    virtual void detailmatch()const{
+    cout<<"FIRST NAME"<<firstname<<endl;
+    cout<<"LAST NAME"<<lastname<<endl;
+    cout<<"ID NUMBER "<<id<<endl;
+    cout<<"AGE"<<age<<endl;
+    cout<<"CONTACT NUMBER"<<contactnumber<<endl;
+    }
+
+};
+
+// Derived class for employees with additional functionality
+class Employee : public Person {
+protected:
+    int id_number[4] = { 234, 876, 435, 125 };
+public:
+
+// Function to check if entered employee ID matches any existing ID
+    void detailmatch()
+       {
+        bool found = false;
+
+        int enteredId;
+
+        cout << "Enter employee ID number: ";
+        cin >> enteredId;
+
+        for (int i = 0; i < 4; ++i) {
+            if (id_number[i] == enteredId) {
+                    cout<<" "<<endl;
+                cout << "You are an employee of this hotel." << endl;
+                cout << "You have a 50 percent discount for booking." << endl;
+                cout<<" "<<endl;
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            cout<<" "<<endl;
+            cout << "ID does not match." << endl;
+            cout<<" "<<endl;
+
+        }
+    }
+};
+//  Class for handling check-in and check-out processes, inherits Employee and Services
+class Checking : public Employee, public Services {
+public:
+    int userType;
+public:
+    Checking()
+    {
+     //default constructor
+    }
+    // Function to determine if the user is a guest or employee and proceed accordingly
+    void getUserType() {
+        while(true){
+                system ("color E");
+        cout << "Press 1 if you are a guest" << endl;
+        cout << "Press 2 if you are an employee" << endl;
+        cout << "Please enter the choice: ";
+        cin >> userType;
+        switch (userType) {
+
+        case 1:
+            cout<<" "<<endl;
+            cout << "You are a guest." << endl;
+            cout<<" "<<endl;
+
+           enterDetails ();        // Collect guest details
+
+           displayPackages();       // Show available packages
+
+            chooseDays();    // Ask for the number of days staying
+              cout<<" "<<endl;
+            cout << "Thanks for submitting your details." << endl;
+            cout << "Please welcome to the room." << endl;
+
+            roomservice();           // Provide room service options
+
+            break;
+        case 2:
+            cout<<" "<<endl;
+            cout << "You are an employee." << endl;
+            cout<<" "<<endl;
+
+           enterDetails ();                // Collect employee details
+
+            detailmatch();              // Verify employee ID
+
+            displayPackages ();     // Show available packages
+
+            chooseDays();        // Ask for the number of days staying
+
+            roomservice();       // Provide room service options
+
+            break;
+        default:
+            cout<<" "<<endl;
+            cout << "Invalid choice." << endl;
+            cout<<" "<<endl;
+            continue;
+        }
+            break;
+        }
+     }
+
+
+
+// Function to display available room types
+    void displayRoomTypes ()
+       {
+
+       int roomType;
+while (true){
+        system ("color e");
+        cout<<" "<<endl;
+        cout << "Press 1 for standard room" << endl;
+        cout << "Press 2 for deluxe room" << endl;
+        cout << "Enter the room type you want: ";
+        cin >> roomType;
+
+        switch (roomType) {
+        case 1:
+            cout<<" "<<endl;
+            cout << "You chose a standard room." << endl;
+            cout<<" "<<endl;
+            break;
+        case 2:
+            cout<<" "<<endl;
+            cout << "You chose a deluxe room." << endl;
+            cout<<" "<<endl;
+            break;
+        default:
+            cout<<" "<<endl;
+        cout<<" Invalid room type. "<<endl;
+        cout<<" "<<endl;
+        continue;
+        }
+        break;
+           }
+          roomfunction();                            // Check room availability and select room
+       }
+// Function to display available packages and discounts
+    void displayPackages()
+    {
+        cout<<" "<<endl;
+        cout << "Packages and Discounts:" << endl;
+        cout << "Stay for 7 days and get a 10% discount on your next stay." << endl;
+        cout << "Stay for 14 days and get a 15% discount on your next stay." << endl;
+        cout << "Stay for 30 days and get a 20% discount on your next stay." << endl;
+    }
+
+// Function to get the number of days the guest wants to stay and apply relevant discounts
+    void chooseDays()
+        { system ("color d");
+        int days;
+        cout << "For how many days do you want to stay? ";
+        cin >> days;
+        cout<<" "<<endl;
+        cout << "You have chosen to stay for " << days << " days." << endl;
+
+        if (days >= 7 && days < 14)
+            {
+                cout<<" "<<endl;
+            cout << "You will receive a 10% discount on your next stay." << endl;
+            cout<<" "<<endl;
+            }
+        else if (days >= 14 && days < 30)
+            {
+                cout<<" "<<endl;
+            cout << "You will receive a 15% discount on your next stay." << endl;
+            cout<<" "<<endl;
+            }
+        else if (days >= 30)
+            {
+                cout<<" "<<endl;
+            cout << "You will receive a 20% discount on your next stay." << endl;
+            cout<<" "<<endl;
+             }
+        else {
+                cout<<" "<<endl;
+            cout << "Stay longer to receive discounts!" << endl;
+            cout<<" "<<endl;
+            }
+
+       displayRoomTypes ();                   // Display room types to choose from
+
+    }
+
+// Function to get the room number and check its availability
+    void roomfunction() {
+
+        while (true)
+            {
+                system ("color 7");
+       try{
+        int roomNumber;
+            cout << "Enter the room number: ";
+            cin >> roomNumber;
+        if (roomNumber > 10)
+            {
+                cout<<" "<<endl;
+            cout << "Room is available." << endl;
+            cout<<" "<<endl;
+            break;
+            }
+        else
+            {
+                cout<<" "<<endl;
+            throw runtime_error( "Room is not available." );
+            cout<<" "<<endl;
+            }
+        }
+    catch(runtime_error& e)
+        {
+            cout<<" "<<endl;
+        cout<<e.what()<<endl;
+        cout<<"Please try again"<<endl;
+        cout<<" "<<endl;
+         }
+       }
+    }
+};
+
+// Class to manage the entire system, inherits from Checking
+class Managmentsystem : public Checking {
+private:
+    int num_of_size = 20;
+    int Rooms[20];
+
+public:
+    Managmentsystem() {
+        for (int i = 0; i < num_of_size; ++i) {
+            Rooms[i] = 0;
+        }
+    }
+~ Managmentsystem()
+     {
+         cout<<" "<<endl;
+      cout << " Thank you for choosing this hotel service " <<endl;
+     }
+
+// Function to manage check-in and check-out processes
+    void manageDetails (){
+while(true){
+        system ("color b");
+        int choice;
+        cout<<" "<<endl;
+        cout << "Press 1 to check in" << endl;
+        cout << "Press 2 to check out" << endl;
+        cout << "Please enter the choice: ";
+        cin >> choice;
+        switch (choice) {
+        case 1:
+            cout<<" "<<endl;
+            cout << "You are checking in." << endl;
+            cout<<" "<<endl;
+            getUserType ();
+            // Handle check-in based on user type
+            break;
+
+        case 2:
+            cout<<" "<<endl;
+            cout << "You are checking out." << endl;
+            cout<<" "<<endl;
+            checkout();                          // Handle check-out process
+            break;
+        default:
+            cout<<" "<<endl;
+            cout << "Invalid choice ." << endl;
+            cout<<" "<<endl;
+            continue;
+        }
+            break;
+        }
+
+    }
+
+
+// Function to handle check-out process
+    void checkout()
+       { system ("color E");
+        int daysStayed;
+
+        cout << "Please enter the number of days you stayed: ";
+        cin >> daysStayed;
+          cout<<" "<<endl;
+        cout << "Thank you for staying for " << daysStayed << " days." << endl;
+
+        if (daysStayed >= 7)
+        {
+            cout<<" "<<endl;
+            cout << "You qualify for a discount on your next stay!" << endl;
+        }
+         else
+        {
+            cout<<" "<<endl;
+            cout << "Thank you for staying with us." << endl;
+        }
+    }
+};
+
+int main() {
+
+    Managmentsystem hotelSystem;
+
+    cout << "                *****| Marian Hotel |***** " << endl;
+    cout<<""<<endl;
+    cout << "**********| Welcome to the Hotel Management System |********** " << endl;
+
+// Manage hotel check-in and check-out details
+    hotelSystem. manageDetails ();
+
+    return 0;
+}
