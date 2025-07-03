@@ -1,0 +1,33 @@
+<?php
+$conn = new mysqli("localhost", "root", "03120453586", "cars");
+if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+
+$location = $_GET['location'] ?? die("No showroom location provided.");
+$showroom = $conn->query("SELECT * FROM showroom WHERE location = '$location'")->fetch_assoc();
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $capacity = $_POST['capacity'];
+    $cars_available = $_POST['cars_available'];
+    $revenue = $_POST['revenue'];
+
+    $sql = "UPDATE showroom SET
+            capacity = '$capacity',
+            cars_available = '$cars_available',
+            revenue = '$revenue'
+            WHERE location = '$location'";
+
+    if ($conn->query($sql) === TRUE) {
+        echo "<script>alert('Showroom updated successfully!'); window.location.href='view_showroom.php';</script>";
+    } else {
+        echo "Error: " . $conn->error;
+    }
+}
+?>
+
+<form method="POST">
+    Location: <strong><?= $location ?></strong><br><br>
+    Capacity: <input type="number" name="capacity" value="<?= $showroom['capacity'] ?>" required><br><br>
+    Cars Available: <input type="number" name="cars_available" value="<?= $showroom['cars_available'] ?>" required><br><br>
+    Revenue: <input type="number" step="0.01" name="revenue" value="<?= $showroom['revenue'] ?>" required><br><br>
+    <input type="submit" value="Update Showroom">
+</form>

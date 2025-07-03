@@ -1,0 +1,13 @@
+<?php
+$conn = new mysqli("localhost", "root", "", "cars");
+if ($conn->connect_error) die("Connection failed: " . $conn->connect_error);
+
+$location = $_GET['location'] ?? die("No showroom location provided.");
+
+$sql = "DELETE FROM showroom WHERE location = '$location'";
+if ($conn->query($sql) === TRUE) {
+    echo "<script>alert('Showroom deleted successfully!'); window.location.href='view_showroom.php';</script>";
+} else {
+    echo "Error deleting: " . $conn->error;
+}
+?>
